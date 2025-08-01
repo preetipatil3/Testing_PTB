@@ -1,0 +1,95 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ParentTeacherBridge.API.Models;
+
+public partial class Teacher
+{
+        [Key]
+        [Column("teacher_id")]
+        public int TeacherId { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
+        [Column("name")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
+        [Column("email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        [MinLength(6, ErrorMessage = "Password must be at least 6 characters.")]
+        [Column("password")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Phone(ErrorMessage = "Invalid phone number.")]
+        [Column("phone")]
+        public string Phone { get; set; }
+
+        [Required(ErrorMessage = "Gender is required.")]
+        [Column("gender")]
+        public string Gender { get; set; }
+
+        [Column("photo")]
+        public string? Photo { get; set; }
+
+        [Required(ErrorMessage = "Qualification is required.")]
+        [Column("qualification")]
+        public string Qualification { get; set; }
+
+        [Range(0, 50, ErrorMessage = "Experience must be between 0 and 50 years.")]
+        [Column("experience_years")]
+        public int ExperienceYears { get; set; }
+
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
+
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
+
+    //public int TeacherId { get; set; }
+
+    //public string? Name { get; set; }
+
+    //public string? Email { get; set; }
+
+    //public string? Password { get; set; }
+
+    //public string? Phone { get; set; }
+
+    //public string? Gender { get; set; }
+
+    //public string? Photo { get; set; }
+
+    //public string? Qualification { get; set; }
+
+    //public int? ExperienceYears { get; set; }
+
+    //public bool? IsActive { get; set; }
+
+    //public DateTime? CreatedAt { get; set; }
+
+    //public DateTime? UpdatedAt { get; set; }
+
+    public virtual ICollection<Behaviour> Behaviours { get; set; } = new List<Behaviour>();
+
+    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+
+    public virtual ICollection<Performance> Performances { get; set; } = new List<Performance>();
+
+    public virtual ICollection<SchoolClass> SchoolClasses { get; set; } = new List<SchoolClass>();
+
+    public virtual ICollection<Timetable> Timetables { get; set; } = new List<Timetable>();
+
+    
+
+
+}
