@@ -142,6 +142,18 @@ public partial class AppDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
 
+            //added new
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Behaviour>()
+       .HasOne(b => b.Student)
+       .WithMany(s => s.Behaviours)
+       .HasForeignKey(b => b.StudentId);
+
+            modelBuilder.Entity<Behaviour>()
+                .HasOne(b => b.Teacher)
+                .WithMany() // if Teacher has no collection of Behaviours
+                .HasForeignKey(b => b.TeacherId);
+
             entity.HasOne(d => d.Student).WithMany(p => p.Behaviours)
                 .HasForeignKey(d => d.StudentId)
                 .HasConstraintName("FK__behaviour__stude__6A30C649");

@@ -262,3 +262,5 @@ C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\obj\Debug\net8.0\r
 C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\obj\Debug\net8.0\ParentTeacherBridge.API.pdb
 C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\obj\Debug\net8.0\ParentTeacherBridge.API.genruntimeconfig.cache
 C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\obj\Debug\net8.0\ref\ParentTeacherBridge.API.dll
+C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\Preeti\OneDrive\Desktop\demo\ParentTeacherBridge.API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

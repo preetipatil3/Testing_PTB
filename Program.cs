@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParentTeacherBridge.API.Data;
+using ParentTeacherBridge.API.DTO;
 using ParentTeacherBridge.API.Repositories;
 using ParentTeacherBridge.API.Services;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -40,6 +42,18 @@ builder.Services.AddScoped<ITeacherService, TeacherService>();
 
 builder.Services.AddScoped<IBehaviourRepository, BehaviourRepository>();
 builder.Services.AddScoped<IBehaviourService, BehaviourService>();
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 
 

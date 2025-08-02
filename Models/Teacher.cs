@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ParentTeacherBridge.API.Models;
 
@@ -79,14 +80,19 @@ public partial class Teacher
 
     //public DateTime? UpdatedAt { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Behaviour> Behaviours { get; set; } = new List<Behaviour>();
 
+    [JsonIgnore]
     public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
+    [JsonIgnore]
     public virtual ICollection<Performance> Performances { get; set; } = new List<Performance>();
 
+    [JsonIgnore]
     public virtual ICollection<SchoolClass> SchoolClasses { get; set; } = new List<SchoolClass>();
 
+    [JsonIgnore]
     public virtual ICollection<Timetable> Timetables { get; set; } = new List<Timetable>();
 
     
