@@ -29,6 +29,10 @@ namespace ParentTeacherBridge.API.DTO
 
             CreateMap<Student, StudentDto>();
 
+            CreateMap<Performance, PerformanceDto>().ReverseMap();
+            CreateMap<CreatePerformanceDto, Performance>();
+            CreateMap<UpdatePerformanceDto, Performance>();
+
         }
 
     }

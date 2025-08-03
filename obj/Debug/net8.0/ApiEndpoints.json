@@ -111,7 +111,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetTeacher",
-    "RelativePath": "admin/Teachers/{id}",
+    "RelativePath": "teacher/Teachers/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -137,7 +137,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "PutTeacher",
-    "RelativePath": "admin/Teachers/{id}",
+    "RelativePath": "teacher/Teachers/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -158,7 +158,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "DeleteTeacher",
-    "RelativePath": "admin/Teachers/{id}",
+    "RelativePath": "teacher/Teachers/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -174,7 +174,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetBehaviours",
-    "RelativePath": "admin/Teachers/{teacherId}/behaviour",
+    "RelativePath": "teacher/Teachers/{teacherId}/behaviour",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -190,7 +190,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "AddBehaviour",
-    "RelativePath": "admin/Teachers/{teacherId}/behaviour",
+    "RelativePath": "teacher/Teachers/{teacherId}/behaviour",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -211,7 +211,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetBehaviour",
-    "RelativePath": "admin/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -232,7 +232,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "UpdateBehaviour",
-    "RelativePath": "admin/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -258,7 +258,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "DeleteBehaviour",
-    "RelativePath": "admin/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -279,7 +279,7 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetAllStudents",
-    "RelativePath": "admin/Teachers/students",
+    "RelativePath": "teacher/Teachers/students",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -289,8 +289,93 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetStudentById",
-    "RelativePath": "admin/Teachers/students/{id}",
+    "RelativePath": "teacher/Teachers/students/{id}",
     "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
+    "Method": "GetStudentPerformance",
+    "RelativePath": "teacher/Teachers/students/{studentId}/performance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "studentId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
+    "Method": "AddPerformance",
+    "RelativePath": "teacher/Teachers/students/performance",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "ParentTeacherBridge.API.DTO.CreatePerformanceDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
+    "Method": "GetPerformanceById",
+    "RelativePath": "teacher/Teachers/students/performance/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
+    "Method": "UpdatePerformance",
+    "RelativePath": "teacher/Teachers/students/performance/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "ParentTeacherBridge.API.DTO.UpdatePerformanceDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
+    "Method": "DeletePerformance",
+    "RelativePath": "teacher/Teachers/students/performance/{id}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [

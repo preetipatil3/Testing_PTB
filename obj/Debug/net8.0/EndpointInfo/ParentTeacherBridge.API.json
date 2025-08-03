@@ -190,7 +190,7 @@
         }
       }
     },
-    "/admin/Teachers/{id}": {
+    "/teacher/Teachers/{id}": {
       "get": {
         "tags": [
           "Teachers"
@@ -291,7 +291,7 @@
         }
       }
     },
-    "/admin/Teachers/{teacherId}/behaviour": {
+    "/teacher/Teachers/{teacherId}/behaviour": {
       "get": {
         "tags": [
           "Teachers"
@@ -354,7 +354,7 @@
         }
       }
     },
-    "/admin/Teachers/{teacherId}/behaviour/{behaviourId}": {
+    "/teacher/Teachers/{teacherId}/behaviour/{behaviourId}": {
       "get": {
         "tags": [
           "Teachers"
@@ -465,7 +465,7 @@
         }
       }
     },
-    "/admin/Teachers/students": {
+    "/teacher/Teachers/students": {
       "get": {
         "tags": [
           "Teachers"
@@ -477,7 +477,7 @@
         }
       }
     },
-    "/admin/Teachers/students/{id}": {
+    "/teacher/Teachers/students/{id}": {
       "get": {
         "tags": [
           "Teachers"
@@ -493,6 +493,144 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/teacher/Teachers/students/{studentId}/performance": {
+      "get": {
+        "tags": [
+          "Teachers"
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/teacher/Teachers/students/performance/{id}": {
+      "get": {
+        "tags": [
+          "Teachers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Teachers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePerformanceDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePerformanceDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePerformanceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Teachers"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/teacher/Teachers/students/performance": {
+      "post": {
+        "tags": [
+          "Teachers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePerformanceDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePerformanceDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePerformanceDto"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -569,6 +707,57 @@
           },
           "notifyParent": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePerformanceDto": {
+        "required": [
+          "examType",
+          "marksObtained",
+          "maxMarks",
+          "studentId",
+          "subjectId",
+          "teacherId"
+        ],
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "teacherId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "examType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "marksObtained": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxMarks": {
+            "type": "number",
+            "format": "double"
+          },
+          "grade": {
+            "type": "string",
+            "nullable": true
+          },
+          "examDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -668,6 +857,42 @@
           },
           "notifyParent": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePerformanceDto": {
+        "required": [
+          "examType",
+          "marksObtained",
+          "maxMarks"
+        ],
+        "type": "object",
+        "properties": {
+          "examType": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "marksObtained": {
+            "type": "number",
+            "format": "double"
+          },
+          "maxMarks": {
+            "type": "number",
+            "format": "double"
+          },
+          "grade": {
+            "type": "string",
+            "nullable": true
+          },
+          "examDate": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "remarks": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

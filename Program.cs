@@ -46,6 +46,10 @@ builder.Services.AddScoped<IBehaviourService, BehaviourService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 
+builder.Services.AddScoped<IPerformanceRepository, PerformanceRepository>();
+builder.Services.AddScoped<IPerformanceService, PerformanceService>();
+
+
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

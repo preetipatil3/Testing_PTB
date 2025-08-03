@@ -16,14 +16,16 @@ namespace ParentTeacherBridge.API.Controllers
         private readonly ITeacherService _teacherService;
         private readonly IBehaviourService _behaviourService;
         private readonly IStudentService _studentService;
+        private readonly IPerformanceService _performanceService;
         private readonly IMapper _mapper;
 
-        public TeachersController(ITeacherService teacherService, IBehaviourService behaviourService, IMapper mapper, IStudentService studentService)
+        public TeachersController(ITeacherService teacherService, IBehaviourService behaviourService, IMapper mapper, IStudentService studentService, IPerformanceService performanceService)
         {
             _teacherService = teacherService;
             _behaviourService = behaviourService;
             _mapper = mapper;
             _studentService = studentService;
+            _performanceService = performanceService;
         }
 
         //// GET: teacher/Teachers
@@ -349,6 +351,58 @@ namespace ParentTeacherBridge.API.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        #region Student Performance CRUD
+
+        [HttpGet("students/{studentId}/performance")]
+        public async Task<IActionResult> GetStudentPerformance(int studentId)
+        {
+            var performances = await _performanceService.GetPerformanceByStudentIdAsync(studentId);
+            return Ok(_mapper.Map<IEnumerable<PerformanceDto>>(performances));
+        }
+
+        [HttpGet("students/performance/{id}")]
+        public async Task<IActionResult> GetPerformanceById(int id)
+        {
+            var performance = await _performanceService.GetPerformanceByIdAsync(id);
+            if (performance == null) return NotFound("Performance record not found.");
+            return Ok(_mapper.Map<PerformanceDto>(performance));
+        }
+
+        [HttpPost("students/performance")]
+        public async Task<IActionResult> AddPerformance([FromBody] CreatePerformanceDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var performance = _mapper.Map<Performance>(dto);
+            var newPerformance = await _performanceService.AddPerformanceAsync(performance);
+
+            return CreatedAtAction(nameof(GetPerformanceById),
+                new { id = newPerformance.PerformanceId },
+                _mapper.Map<PerformanceDto>(newPerformance));
+        }
+
+        [HttpPut("students/performance/{id}")]
+        public async Task<IActionResult> UpdatePerformance(int id, [FromBody] UpdatePerformanceDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var updatedPerformance = _mapper.Map<Performance>(dto);
+            var result = await _performanceService.UpdatePerformanceAsync(id, updatedPerformance);
+
+            if (result == null) return NotFound("Performance record not found.");
+            return NoContent();
+        }
+
+        [HttpDelete("students/performance/{id}")]
+        public async Task<IActionResult> DeletePerformance(int id)
+        {
+            var deleted = await _performanceService.DeletePerformanceAsync(id);
+            if (!deleted) return NotFound("Performance record not found.");
+            return NoContent();
+        }
+
+        #endregion
 
     }
 }
