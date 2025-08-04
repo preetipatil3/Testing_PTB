@@ -31,7 +31,7 @@ namespace ParentTeacherBridge.API.DTO
 
             CreateMap<Performance, PerformanceDto>().ReverseMap();
             CreateMap<CreatePerformanceDto, Performance>();
-            CreateMap<UpdatePerformanceDto, Performance>();
+            CreateMap<UpdatePerformanceDto, Performance>().ReverseMap();
 
         }
 

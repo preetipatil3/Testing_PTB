@@ -1,53 +1,81 @@
 ﻿using ParentTeacherBridge.API.Data;
 using ParentTeacherBridge.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace ParentTeacherBridge.API.Repositories
 {
-    public class PerformanceRepository:IPerformanceRepository
+    public class PerformanceRepository : IPerformanceRepository
     {
         private readonly ParentTeacherBridgeAPIContext _context;
+        private readonly ILogger<PerformanceRepository> _logger;
 
-            public PerformanceRepository(ParentTeacherBridgeAPIContext context)
-            {
-                _context = context;
-            }
+        public PerformanceRepository(ParentTeacherBridgeAPIContext context, ILogger<PerformanceRepository> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
 
-            public async Task<IEnumerable<Performance>> GetPerformanceByStudentIdAsync(int studentId)
+        public async Task<IEnumerable<Performance>> GetPerformanceByStudentIdAsync(int studentId)
+        {
+            try
             {
+                _logger.LogInformation("Fetching performances for StudentId {StudentId}", studentId);
                 return await _context.Set<Performance>()
                                      .Include(p => p.Student)
                                      .Include(p => p.Subject)
                                      .Where(p => p.StudentId == studentId)
                                      .ToListAsync();
             }
-
-            public async Task<Performance?> GetPerformanceByIdAsync(int id)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Error fetching performances for StudentId {StudentId}", studentId);
+                throw;
+            }
+        }
+
+        public async Task<Performance?> GetPerformanceByIdAsync(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Fetching performance with ID {PerformanceId}", id);
                 return await _context.Set<Performance>()
                                      .Include(p => p.Student)
                                      .Include(p => p.Subject)
                                      .FirstOrDefaultAsync(p => p.PerformanceId == id);
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching performance with ID {PerformanceId}", id);
+                throw;
+            }
+        }
 
-            public async Task<Performance> AddPerformanceAsync(Performance performance)
+        public async Task<Performance> AddPerformanceAsync(Performance performance)
+        {
+            try
             {
                 performance.CreatedAt = DateTime.UtcNow;
                 performance.UpdatedAt = DateTime.UtcNow;
                 _context.Add(performance);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Added performance with ID {PerformanceId}", performance.PerformanceId);
                 return performance;
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding performance");
+                throw;
+            }
+        }
 
         public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
         {
             var existing = await _context.Performance.FindAsync(performance.PerformanceId);
             if (existing == null) return null;
 
-            // ✅ Update fields safely
             existing.StudentId = performance.StudentId;
             existing.TeacherId = performance.TeacherId;
             existing.SubjectId = performance.SubjectId;
@@ -64,31 +92,61 @@ namespace ParentTeacherBridge.API.Repositories
             return existing;
         }
 
-
-
         //public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
         //{
-        //    var existing = await _context.Set<Performance>().FindAsync(performance.PerformanceId);
-        //    if (existing == null) return null;
+        //    try
+        //    {
+        //        var existing = await _context.Performance.FindAsync(performance.PerformanceId);
+        //        if (existing == null)
+        //        {
+        //            _logger.LogWarning("Update failed: Performance with ID {PerformanceId} not found", performance.PerformanceId);
+        //            return null;
+        //        }
 
-        //    _context.Entry(existing).CurrentValues.SetValues(performance);
-        //    existing.UpdatedAt = DateTime.UtcNow;
+        //        existing.StudentId = performance.StudentId;
+        //        existing.TeacherId = performance.TeacherId;
+        //        existing.SubjectId = performance.SubjectId;
+        //        existing.ExamType = performance.ExamType;
+        //        existing.MarksObtained = performance.MarksObtained;
+        //        existing.MaxMarks = performance.MaxMarks;
+        //        existing.Percentage = performance.Percentage;
+        //        existing.Grade = performance.Grade;
+        //        existing.ExamDate = performance.ExamDate;
+        //        existing.Remarks = performance.Remarks;
+        //        existing.UpdatedAt = DateTime.UtcNow;
 
-        //    await _context.SaveChangesAsync();
-        //    return existing;
+        //        await _context.SaveChangesAsync();
+        //        _logger.LogInformation("Updated performance with ID {PerformanceId}", performance.PerformanceId);
+        //        return existing;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error updating performance with ID {PerformanceId}", performance.PerformanceId);
+        //        throw;
+        //    }
         //}
 
         public async Task<bool> DeletePerformanceAsync(int id)
+        {
+            try
             {
                 var performance = await _context.Set<Performance>().FindAsync(id);
-                if (performance == null) return false;
+                if (performance == null)
+                {
+                    _logger.LogWarning("Delete failed: Performance with ID {PerformanceId} not found", id);
+                    return false;
+                }
 
                 _context.Remove(performance);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Deleted performance with ID {PerformanceId}", id);
                 return true;
             }
-        
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting performance with ID {PerformanceId}", id);
+                throw;
+            }
+        }
     }
-
-
 }

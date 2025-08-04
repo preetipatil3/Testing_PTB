@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ParentTeacherBridge.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1ec09eed2ed1fb453ef7fd06e4fdb76d30bb718c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f02f2fa8f1285a29fa849c59a189bab3fa8bd523")]
 [assembly: System.Reflection.AssemblyProductAttribute("ParentTeacherBridge.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ParentTeacherBridge.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

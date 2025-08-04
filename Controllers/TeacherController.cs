@@ -439,21 +439,24 @@ namespace ParentTeacherBridge.API.Controllers
                 new { id = newPerformance.PerformanceId },
                 _mapper.Map<PerformanceDto>(newPerformance));
         }
-        [HttpPut("students/performance/{id}")]
-        public async Task<IActionResult> UpdatePerformance(int id, [FromBody] UpdatePerformanceDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
-            var updatedPerformance = _mapper.Map<Performance>(dto);
-            updatedPerformance.PerformanceId = id;
-            var result = await _performanceService.UpdatePerformanceAsync(id, updatedPerformance);
+      
 
-            if (result == null)
-                return NotFound("Performance record not found.");
+        //[HttpPut("students/performance/{id}")]
+        //public async Task<IActionResult> UpdatePerformance(int id, [FromBody] UpdatePerformanceDto dto)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            return Ok(result); // or NoContent() if you don't want to return the record
-        }
+        //    var updatedPerformance = _mapper.Map<Performance>(dto);
+        //    //updatedPerformance.PerformanceId = id;
+        //    var result = await _performanceService.UpdatePerformanceAsync(id, updatedPerformance);
+
+        //    if (result == null)
+        //        return NotFound("Performance record not found.");
+
+        //    return Ok(result); // or NoContent() if you don't want to return the record
+        //}
 
 
         //[HttpPut("students/performance/{id}")]

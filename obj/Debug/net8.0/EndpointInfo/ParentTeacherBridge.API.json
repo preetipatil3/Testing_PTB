@@ -799,6 +799,11 @@
             "type": "number",
             "format": "double"
           },
+          "percentage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "grade": {
             "type": "string",
             "nullable": true
@@ -918,7 +923,8 @@
         "required": [
           "examType",
           "marksObtained",
-          "maxMarks"
+          "maxMarks",
+          "percentage"
         ],
         "type": "object",
         "properties": {
@@ -927,6 +933,10 @@
             "type": "string"
           },
           "marksObtained": {
+            "type": "number",
+            "format": "double"
+          },
+          "percentage": {
             "type": "number",
             "format": "double"
           },

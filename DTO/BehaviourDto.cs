@@ -35,19 +35,19 @@ namespace ParentTeacherBridge.API.DTO
             [StringLength(100, ErrorMessage = "Behaviour category cannot exceed 100 characters")]
             public string BehaviourCategory { get; set; } = string.Empty;
 
-        //    [Required(ErrorMessage = "Severity is required")]
-        //[RegularExpression("^(Severe|Moderate|Minor)$", ErrorMessage = "Severity must be Severe, Moderate, or Minor")]
-        //    //[RegularExpression(@"^(Low|Medium|High)$", ErrorMessage = "Severity must be Low, Medium, or High")]
-        //    public string Severity { get; set; } = string.Empty;
-        private string _severity;
-
-        [Required(ErrorMessage = "Severity is required.")]
+            [Required(ErrorMessage = "Severity is required")]
         [RegularExpression("^(Severe|Moderate|Minor)$", ErrorMessage = "Severity must be Severe, Moderate, or Minor")]
-        public string Severity
-        {
-            get => _severity;
-            set => _severity = char.ToUpper(value[0]) + value.Substring(1).ToLower();
-        }
+        //[RegularExpression(@"^(Low|Medium|High)$", ErrorMessage = "Severity must be Low, Medium, or High")]
+        public string Severity { get; set; } = string.Empty;
+        //private string _severity;
+
+        //[Required(ErrorMessage = "Severity is required.")]
+        //[RegularExpression("^(Severe|Moderate|Minor)$", ErrorMessage = "Severity must be Severe, Moderate, or Minor")]
+        //public string Severity
+        //{
+        //    get => _severity;
+        //    set => _severity = char.ToUpper(value[0]) + value.Substring(1).ToLower();
+        //}
 
         [Required(ErrorMessage = "Description is required")]
             [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
