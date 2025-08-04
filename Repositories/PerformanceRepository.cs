@@ -42,19 +42,43 @@ namespace ParentTeacherBridge.API.Repositories
                 return performance;
             }
 
-            public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
-            {
-                var existing = await _context.Set<Performance>().FindAsync(performance.PerformanceId);
-                if (existing == null) return null;
+        public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
+        {
+            var existing = await _context.Performance.FindAsync(performance.PerformanceId);
+            if (existing == null) return null;
 
-                _context.Entry(existing).CurrentValues.SetValues(performance);
-                existing.UpdatedAt = DateTime.UtcNow;
+            // ✅ Update fields safely
+            existing.StudentId = performance.StudentId;
+            existing.TeacherId = performance.TeacherId;
+            existing.SubjectId = performance.SubjectId;
+            existing.ExamType = performance.ExamType;
+            existing.MarksObtained = performance.MarksObtained;
+            existing.MaxMarks = performance.MaxMarks;
+            existing.Percentage = performance.Percentage;
+            existing.Grade = performance.Grade;
+            existing.ExamDate = performance.ExamDate;
+            existing.Remarks = performance.Remarks;
+            existing.UpdatedAt = DateTime.UtcNow;
 
-                await _context.SaveChangesAsync();
-                return existing;
-            }
+            await _context.SaveChangesAsync();
+            return existing;
+        }
 
-            public async Task<bool> DeletePerformanceAsync(int id)
+
+
+        //public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
+        //{
+        //    var existing = await _context.Set<Performance>().FindAsync(performance.PerformanceId);
+        //    if (existing == null) return null;
+
+        //    _context.Entry(existing).CurrentValues.SetValues(performance);
+        //    existing.UpdatedAt = DateTime.UtcNow;
+
+        //    await _context.SaveChangesAsync();
+        //    return existing;
+        //}
+
+        public async Task<bool> DeletePerformanceAsync(int id)
             {
                 var performance = await _context.Set<Performance>().FindAsync(id);
                 if (performance == null) return false;

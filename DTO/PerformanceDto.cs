@@ -24,7 +24,8 @@ namespace ParentTeacherBridge.API.DTO
 
         public class CreatePerformanceDto
         {
-            [Required] public int StudentId { get; set; }
+        public int PerformanceId { get; set; }
+        [Required] public int StudentId { get; set; }
             [Required] public int TeacherId { get; set; }
             [Required] public int SubjectId { get; set; }
             [Required] public string ExamType { get; set; } = string.Empty;

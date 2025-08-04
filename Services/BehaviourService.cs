@@ -6,103 +6,79 @@ using System.Threading.Tasks;
 
 namespace ParentTeacherBridge.API.Services
 {
-    public class BehaviourService:IBehaviourService
+    public class BehaviourService : IBehaviourService
     {
+        private readonly IBehaviourRepository _repository;
 
-            private readonly IBehaviourRepository _repository;
+        public BehaviourService(IBehaviourRepository repository)
+        {
+            _repository = repository;
+        }
 
-            public BehaviourService(IBehaviourRepository repository)
-            {
-                _repository = repository;
-            }
+        public Task<IEnumerable<Behaviour>> GetBehavioursByStudentAsync(int teacherId, int studentId) =>
+            _repository.GetBehavioursByStudentAsync(teacherId, studentId);
 
-            public async Task<IEnumerable<Behaviour>> GetBehavioursByTeacherAsync(int teacherId)
-            {
-                return await _repository.GetBehavioursByTeacherAsync(teacherId);
-            }
+        public Task<Behaviour> GetBehaviourByIdAsync(int teacherId, int studentId, int behaviourId) =>
+            _repository.GetBehaviourByIdAsync(teacherId, studentId, behaviourId);
 
-            public async Task<Behaviour?> GetBehaviourByIdAsync(int teacherId, int behaviourId)
-            {
-                return await _repository.GetBehaviourByIdAsync(teacherId, behaviourId);
-            }
+        public Task<Behaviour> AddBehaviourAsync(Behaviour behaviour) =>
+            _repository.AddBehaviourAsync(behaviour);
 
-            public async Task<Behaviour> AddBehaviourAsync(Behaviour behaviour)
-            {
-                behaviour.CreatedAt = DateTime.UtcNow;
-                behaviour.UpdatedAt = DateTime.UtcNow;
-                return await _repository.AddBehaviourAsync(behaviour);
-            }
+        public Task<Behaviour> UpdateBehaviourAsync(int teacherId, int studentId, int behaviourId, Behaviour behaviour) =>
+            _repository.UpdateBehaviourAsync(teacherId, studentId, behaviourId, behaviour);
 
-            public async Task<Behaviour?> UpdateBehaviourAsync(int teacherId, int behaviourId, Behaviour updatedBehaviour)
-            {
-                var existingBehaviour = await _repository.GetBehaviourByIdAsync(teacherId, behaviourId);
-                if (existingBehaviour == null) return null;
+        public Task<bool> DeleteBehaviourAsync(int teacherId, int studentId, int behaviourId) =>
+            _repository.DeleteBehaviourAsync(teacherId, studentId, behaviourId);
+        //private readonly IBehaviourRepository _repository;
 
-                // Update fields
-                existingBehaviour.StudentId = updatedBehaviour.StudentId;
-                existingBehaviour.IncidentDate = updatedBehaviour.IncidentDate;
-                existingBehaviour.BehaviourCategory = updatedBehaviour.BehaviourCategory;
-                existingBehaviour.Severity = updatedBehaviour.Severity;
-                existingBehaviour.Description = updatedBehaviour.Description;
-                existingBehaviour.NotifyParent = updatedBehaviour.NotifyParent;
-                existingBehaviour.UpdatedAt = DateTime.UtcNow;
+        //public BehaviourService(IBehaviourRepository repository)
+        //{
+        //    _repository = repository;
+        //}
 
-                return await _repository.UpdateBehaviourAsync(existingBehaviour);
-            }
+        //public async Task<IEnumerable<Behaviour>> GetBehavioursByTeacherAsync(int teacherId)
+        //{
+        //    return await _repository.GetBehavioursByTeacherAsync(teacherId);
+        //}
 
-            public async Task<bool> DeleteBehaviourAsync(int teacherId, int behaviourId)
-            {
-                return await _repository.DeleteBehaviourAsync(teacherId, behaviourId);
-            }
-        
-    //private readonly IBehaviourRepository _behaviourRepository;
+        //public async Task<Behaviour?> GetBehaviourByIdAsync(int teacherId, int behaviourId)
+        //{
+        //    return await _repository.GetBehaviourByIdAsync(teacherId, behaviourId);
+        //}
 
-    //public BehaviourService(IBehaviourRepository behaviourRepository)
-    //{
-    //    _behaviourRepository = behaviourRepository;
-    //}
+        //public async Task<Behaviour> AddBehaviourAsync(Behaviour behaviour)
+        //{
+        //    behaviour.CreatedAt = DateTime.UtcNow;
+        //    behaviour.UpdatedAt = DateTime.UtcNow;
+        //    return await _repository.AddBehaviourAsync(behaviour);
+        //}
 
-    //public async Task<IEnumerable<Behaviour>> GetBehavioursByTeacherAsync(int teacherId)
-    //{
-    //    return await _behaviourRepository.GetBehavioursByTeacherAsync(teacherId);
-    //}
+        //public async Task<Behaviour?> UpdateBehaviourAsync(int teacherId, int behaviourId, Behaviour updatedBehaviour)
+        //{
+        //    var existingBehaviour = await _repository.GetBehaviourByIdAsync(teacherId, behaviourId);
+        //    if (existingBehaviour == null) return null;
 
-    //public async Task<Behaviour> GetBehaviourByIdAsync(int teacherId, int behaviourId)
-    //{
-    //    return await _behaviourRepository.GetBehaviourByIdAsync(teacherId, behaviourId);
-    //}
+        //    // Update fields
+        //    existingBehaviour.StudentId = updatedBehaviour.StudentId;
+        //    existingBehaviour.IncidentDate = updatedBehaviour.IncidentDate;
+        //    existingBehaviour.BehaviourCategory = updatedBehaviour.BehaviourCategory;
+        //    existingBehaviour.Severity = updatedBehaviour.Severity;
+        //    existingBehaviour.Description = updatedBehaviour.Description;
+        //    existingBehaviour.NotifyParent = updatedBehaviour.NotifyParent;
+        //    existingBehaviour.UpdatedAt = DateTime.UtcNow;
 
-    //public async Task<Behaviour> AddBehaviourAsync(int teacherId, Behaviour behaviour)
-    //{
-    //    behaviour.TeacherId = teacherId;
-    //    behaviour.CreatedAt = DateTime.UtcNow;
-    //    behaviour.UpdatedAt = DateTime.UtcNow;
+        //    return await _repository.UpdateBehaviourAsync(existingBehaviour);
+        //}
 
-    //    return await _behaviourRepository.AddBehaviourAsync(behaviour);
-    //}
-
-    //public async Task<Behaviour> UpdateBehaviourAsync(int teacherId, int behaviourId, Behaviour behaviour)
-    //{
-    //    var existing = await _behaviourRepository.GetBehaviourByIdAsync(teacherId, behaviourId);
-    //    if (existing == null) return null;
-
-    //    existing.StudentId = behaviour.StudentId;
-    //    existing.IncidentDate = behaviour.IncidentDate;
-    //    existing.BehaviourCategory = behaviour.BehaviourCategory;
-    //    existing.Severity = behaviour.Severity;
-    //    existing.Description = behaviour.Description;
-    //    existing.NotifyParent = behaviour.NotifyParent;
-    //    existing.UpdatedAt = DateTime.UtcNow;
-
-    //    return await _behaviourRepository.UpdateBehaviourAsync(existing);
-    //}
-
-    //public async Task<bool> DeleteBehaviourAsync(int teacherId, int behaviourId)
-    //{
-    //    return await _behaviourRepository.DeleteBehaviourAsync(teacherId, behaviourId);
-    //}
-
-}
+        //public async Task<bool> DeleteBehaviourAsync(int teacherId, int behaviourId)
+        //{
+        //    return await _repository.DeleteBehaviourAsync(teacherId, behaviourId);
+        //}
 
 
-}
+    }
+
+    }
+
+
+

@@ -34,7 +34,8 @@ public partial class Behaviour
 
     [Column("severity")]
     [Required(ErrorMessage = "Severity is required.")]
-    [RegularExpression("^(Low|Medium|High)$", ErrorMessage = "Severity must be Low, Medium, or High.")]
+    //[severity]='Severe' OR[severity]='Moderate' OR[severity]='Minor'
+    [RegularExpression("^(Severe|Moderate|Minor)$", ErrorMessage = "Severity must be Severe, Moderate, or Minor.")]
     public string? Severity { get; set; }
 
 

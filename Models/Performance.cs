@@ -25,6 +25,7 @@ public partial class Performance
     public int? SubjectId { get; set; }
 
     [Column("exam_type")]
+    //CHECK([exam_type]= 'Practical' OR[exam_type]= 'Quiz' OR[exam_type]= 'Unit Test' OR[exam_type]= 'Final' OR[exam_type]= 'Midterm')
     public string? ExamType { get; set; }
 
     [Column("marks_obtained")]

@@ -291,7 +291,7 @@
         }
       }
     },
-    "/teacher/Teachers/{teacherId}/behaviour": {
+    "/teacher/Teachers/{teacherId}/students/{studentId}/behaviours": {
       "get": {
         "tags": [
           "Teachers"
@@ -299,6 +299,15 @@
         "parameters": [
           {
             "name": "teacherId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -320,6 +329,15 @@
         "parameters": [
           {
             "name": "teacherId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -354,7 +372,7 @@
         }
       }
     },
-    "/teacher/Teachers/{teacherId}/behaviour/{behaviourId}": {
+    "/teacher/Teachers/{teacherId}/students/{studentId}/behaviours/{behaviourId}": {
       "get": {
         "tags": [
           "Teachers"
@@ -362,6 +380,15 @@
         "parameters": [
           {
             "name": "teacherId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -392,6 +419,15 @@
         "parameters": [
           {
             "name": "teacherId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -441,6 +477,15 @@
         "parameters": [
           {
             "name": "teacherId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "studentId",
             "in": "path",
             "required": true,
             "schema": {
@@ -678,6 +723,10 @@
         ],
         "type": "object",
         "properties": {
+          "behaviourId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "studentId": {
             "type": "integer",
             "format": "int32"
@@ -697,7 +746,7 @@
           },
           "severity": {
             "minLength": 1,
-            "pattern": "^(Low|Medium|High)$",
+            "pattern": "^(Severe|Moderate|Minor)$",
             "type": "string"
           },
           "description": {
@@ -722,6 +771,10 @@
         ],
         "type": "object",
         "properties": {
+          "performanceId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "studentId": {
             "type": "integer",
             "format": "int32"
@@ -847,7 +900,7 @@
           },
           "severity": {
             "minLength": 1,
-            "pattern": "^(Low|Medium|High)$",
+            "pattern": "^(Severe|Moderate|Minor)$",
             "type": "string"
           },
           "description": {

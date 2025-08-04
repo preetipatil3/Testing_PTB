@@ -174,13 +174,18 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetBehaviours",
-    "RelativePath": "teacher/Teachers/{teacherId}/behaviour",
+    "RelativePath": "teacher/Teachers/{teacherId}/students/{studentId}/behaviours",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "teacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -190,13 +195,18 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "AddBehaviour",
-    "RelativePath": "teacher/Teachers/{teacherId}/behaviour",
+    "RelativePath": "teacher/Teachers/{teacherId}/students/{studentId}/behaviours",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "teacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       },
@@ -211,13 +221,18 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "GetBehaviour",
-    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/students/{studentId}/behaviours/{behaviourId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "teacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       },
@@ -232,13 +247,18 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "UpdateBehaviour",
-    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/students/{studentId}/behaviours/{behaviourId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "teacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       },
@@ -258,13 +278,18 @@
   {
     "ContainingType": "ParentTeacherBridge.API.Controllers.TeachersController",
     "Method": "DeleteBehaviour",
-    "RelativePath": "teacher/Teachers/{teacherId}/behaviour/{behaviourId}",
+    "RelativePath": "teacher/Teachers/{teacherId}/students/{studentId}/behaviours/{behaviourId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "teacherId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "studentId",
         "Type": "System.Int32",
         "IsRequired": true
       },

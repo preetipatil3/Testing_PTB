@@ -187,57 +187,115 @@ namespace ParentTeacherBridge.API.Controllers
         //} 
         #endregion
 
-        [HttpGet("{teacherId}/behaviour")]
-        public async Task<IActionResult> GetBehaviours(int teacherId)
+        //[HttpGet("{teacherId}/behaviour")]
+        //public async Task<IActionResult> GetBehaviours(int teacherId)
+        //{
+        //    var behaviours = await _behaviourService.GetBehavioursByTeacherAsync(teacherId);
+        //    if (!behaviours.Any()) return Ok(new List<BehaviourDto>());
+
+        //    return Ok(_mapper.Map<IEnumerable<BehaviourDto>>(behaviours));
+        //}
+
+        //[HttpGet("{teacherId}/behaviour/{behaviourId}")]
+        //public async Task<IActionResult> GetBehaviour(int teacherId, int behaviourId)
+        //{
+        //    var behaviour = await _behaviourService.GetBehaviourByIdAsync(teacherId, behaviourId);
+        //    if (behaviour == null) return NotFound("Behaviour record not found.");
+
+        //    return Ok(_mapper.Map<BehaviourDto>(behaviour));
+        //}
+
+        //[HttpPost("{teacherId}/behaviour")]
+        //public async Task<IActionResult> AddBehaviour(int teacherId, [FromBody] CreateBehaviourDto dto)
+        //{
+        //    if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        //    var behaviour = _mapper.Map<Behaviour>(dto);
+        //    behaviour.TeacherId = teacherId;
+
+        //    var newBehaviour = await _behaviourService.AddBehaviourAsync(behaviour);
+        //    var behaviourDto = _mapper.Map<BehaviourDto>(newBehaviour);
+
+        //    return CreatedAtAction(nameof(GetBehaviour), new { teacherId, behaviourId = behaviourDto.BehaviourId }, behaviourDto);
+        //}
+
+        //[HttpPut("{teacherId}/behaviour/{behaviourId}")]
+        //public async Task<IActionResult> UpdateBehaviour(int teacherId, int behaviourId, [FromBody] UpdateBehaviourDto dto)
+        //{
+        //    if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        //    var updatedBehaviour = _mapper.Map<Behaviour>(dto);
+        //    var updated = await _behaviourService.UpdateBehaviourAsync(teacherId, behaviourId, updatedBehaviour);
+
+        //    if (updated == null) return NotFound("Behaviour record not found.");
+        //    return NoContent();
+        //}
+
+        //[HttpDelete("{teacherId}/behaviour/{behaviourId}")]
+        //public async Task<IActionResult> DeleteBehaviour(int teacherId, int behaviourId)
+        //{
+        //    var deleted = await _behaviourService.DeleteBehaviourAsync(teacherId, behaviourId);
+        //    if (!deleted) return NotFound("Behaviour record not found.");
+        //    return NoContent();
+        //}
+
+        [HttpGet("{teacherId}/students/{studentId}/behaviours")]
+        public async Task<IActionResult> GetBehaviours(int teacherId, int studentId)
         {
-            var behaviours = await _behaviourService.GetBehavioursByTeacherAsync(teacherId);
+            var behaviours = await _behaviourService.GetBehavioursByStudentAsync(teacherId, studentId);
             if (!behaviours.Any()) return Ok(new List<BehaviourDto>());
 
             return Ok(_mapper.Map<IEnumerable<BehaviourDto>>(behaviours));
         }
 
-        [HttpGet("{teacherId}/behaviour/{behaviourId}")]
-        public async Task<IActionResult> GetBehaviour(int teacherId, int behaviourId)
+        [HttpGet("{teacherId}/students/{studentId}/behaviours/{behaviourId}")]
+        public async Task<IActionResult> GetBehaviour(int teacherId, int studentId, int behaviourId)
         {
-            var behaviour = await _behaviourService.GetBehaviourByIdAsync(teacherId, behaviourId);
+            var behaviour = await _behaviourService.GetBehaviourByIdAsync(teacherId, studentId, behaviourId);
             if (behaviour == null) return NotFound("Behaviour record not found.");
 
             return Ok(_mapper.Map<BehaviourDto>(behaviour));
         }
 
-        [HttpPost("{teacherId}/behaviour")]
-        public async Task<IActionResult> AddBehaviour(int teacherId, [FromBody] CreateBehaviourDto dto)
+        [HttpPost("{teacherId}/students/{studentId}/behaviours")]
+        public async Task<IActionResult> AddBehaviour(int teacherId, int studentId, [FromBody] CreateBehaviourDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var behaviour = _mapper.Map<Behaviour>(dto);
             behaviour.TeacherId = teacherId;
+            behaviour.StudentId = studentId;
 
             var newBehaviour = await _behaviourService.AddBehaviourAsync(behaviour);
             var behaviourDto = _mapper.Map<BehaviourDto>(newBehaviour);
 
-            return CreatedAtAction(nameof(GetBehaviour), new { teacherId, behaviourId = behaviourDto.BehaviourId }, behaviourDto);
+            return CreatedAtAction(nameof(GetBehaviour),
+                new { teacherId, studentId, behaviourId = behaviourDto.BehaviourId },
+                behaviourDto);
         }
 
-        [HttpPut("{teacherId}/behaviour/{behaviourId}")]
-        public async Task<IActionResult> UpdateBehaviour(int teacherId, int behaviourId, [FromBody] UpdateBehaviourDto dto)
+        [HttpPut("{teacherId}/students/{studentId}/behaviours/{behaviourId}")]
+        public async Task<IActionResult> UpdateBehaviour(int teacherId, int studentId, int behaviourId, [FromBody] UpdateBehaviourDto dto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var updatedBehaviour = _mapper.Map<Behaviour>(dto);
-            var updated = await _behaviourService.UpdateBehaviourAsync(teacherId, behaviourId, updatedBehaviour);
+            var updated = await _behaviourService.UpdateBehaviourAsync(teacherId, studentId, behaviourId, updatedBehaviour);
 
             if (updated == null) return NotFound("Behaviour record not found.");
             return NoContent();
         }
 
-        [HttpDelete("{teacherId}/behaviour/{behaviourId}")]
-        public async Task<IActionResult> DeleteBehaviour(int teacherId, int behaviourId)
+        [HttpDelete("{teacherId}/students/{studentId}/behaviours/{behaviourId}")]
+        public async Task<IActionResult> DeleteBehaviour(int teacherId, int studentId, int behaviourId)
         {
-            var deleted = await _behaviourService.DeleteBehaviourAsync(teacherId, behaviourId);
+            var deleted = await _behaviourService.DeleteBehaviourAsync(teacherId, studentId, behaviourId);
             if (!deleted) return NotFound("Behaviour record not found.");
             return NoContent();
         }
+
+
+
 
         #region StudentInfo
         //[HttpGet("{teacherId}/students")]
@@ -381,18 +439,34 @@ namespace ParentTeacherBridge.API.Controllers
                 new { id = newPerformance.PerformanceId },
                 _mapper.Map<PerformanceDto>(newPerformance));
         }
-
         [HttpPut("students/performance/{id}")]
         public async Task<IActionResult> UpdatePerformance(int id, [FromBody] UpdatePerformanceDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var updatedPerformance = _mapper.Map<Performance>(dto);
+            updatedPerformance.PerformanceId = id;
             var result = await _performanceService.UpdatePerformanceAsync(id, updatedPerformance);
 
-            if (result == null) return NotFound("Performance record not found.");
-            return NoContent();
+            if (result == null)
+                return NotFound("Performance record not found.");
+
+            return Ok(result); // or NoContent() if you don't want to return the record
         }
+
+
+        //[HttpPut("students/performance/{id}")]
+        //public async Task<IActionResult> UpdatePerformance(int id, [FromBody] UpdatePerformanceDto dto)
+        //{
+        //    if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        //    var updatedPerformance = _mapper.Map<Performance>(dto);
+        //    var result = await _performanceService.UpdatePerformanceAsync(id, updatedPerformance);
+
+        //    if (result == null) return NotFound("Performance record not found.");
+        //    return NoContent();
+        //}
 
         [HttpDelete("students/performance/{id}")]
         public async Task<IActionResult> DeletePerformance(int id)
