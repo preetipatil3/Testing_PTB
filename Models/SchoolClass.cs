@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Text.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,6 +14,8 @@ public partial class SchoolClass
 
     public int ClassId { get; set; }
 
+    [Required]
+    [MaxLength(50)]
     [Column("class_name")]
     public string? ClassName { get; set; }
 
@@ -25,12 +28,12 @@ public partial class SchoolClass
 
     [Column("updated_at")]
     public DateTime? UpdatedAt { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
-
+    [JsonIgnore]
     public virtual Teacher? ClassTeacher { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Student> Students { get; set; } = new List<Student>();
-
+    [JsonIgnore]
     public virtual ICollection<Timetable> Timetables { get; set; } = new List<Timetable>();
 }

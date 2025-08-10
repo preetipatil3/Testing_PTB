@@ -16,6 +16,15 @@ namespace ParentTeacherBridge.API.Repositories
             _context = context;
         }
 
+
+        public async Task<IEnumerable<Behaviour>> GetAllBehavioursByTeacherAsync(int teacherId)
+        {
+            return await _context.Behaviour
+                .Where(b => b.TeacherId == teacherId)
+                .OrderByDescending(b => b.CreatedAt) // Optional: Order by creation date
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Behaviour>> GetBehavioursByStudentAsync(int teacherId, int studentId)
         {
             return await _context.Behaviour

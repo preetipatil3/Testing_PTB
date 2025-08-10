@@ -11,7 +11,9 @@ namespace ParentTeacherBridge.API.Repositories
             Task<Performance> AddPerformanceAsync(Performance performance);
             Task<Performance?> UpdatePerformanceAsync(Performance performance);
             Task<bool> DeletePerformanceAsync(int id);
-        
+        Task<IEnumerable<Performance>> GetPerformanceByTeacherIdAsync(int teacherId);
+
+
     }
 
 

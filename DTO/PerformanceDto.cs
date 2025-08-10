@@ -31,8 +31,8 @@ namespace ParentTeacherBridge.API.DTO
             [Required] public string ExamType { get; set; } = string.Empty;
             [Required] public double MarksObtained { get; set; }
             [Required] public double MaxMarks { get; set; }
-                      public double? Percentage { get; set; }
-        public string? Grade { get; set; }
+             public double? Percentage { get; set; }
+             public string? Grade { get; set; }
             public DateOnly? ExamDate { get; set; }
             public string? Remarks { get; set; }
         }

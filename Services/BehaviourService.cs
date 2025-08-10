@@ -15,6 +15,8 @@ namespace ParentTeacherBridge.API.Services
             _repository = repository;
         }
 
+        public Task<IEnumerable<Behaviour>> GetAllBehavioursByTeacherAsync(int teacherId) =>
+        _repository.GetAllBehavioursByTeacherAsync(teacherId);
         public Task<IEnumerable<Behaviour>> GetBehavioursByStudentAsync(int teacherId, int studentId) =>
             _repository.GetBehavioursByStudentAsync(teacherId, studentId);
 

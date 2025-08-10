@@ -6,7 +6,7 @@ namespace ParentTeacherBridge.API.Repositories
 {
     public interface IBehaviourRepository
     {
-
+        Task<IEnumerable<Behaviour>> GetAllBehavioursByTeacherAsync(int teacherId);
         Task<IEnumerable<Behaviour>> GetBehavioursByStudentAsync(int teacherId, int studentId);
         Task<Behaviour> GetBehaviourByIdAsync(int teacherId, int studentId, int behaviourId);
         Task<Behaviour> AddBehaviourAsync(Behaviour behaviour);

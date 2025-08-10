@@ -71,61 +71,36 @@ namespace ParentTeacherBridge.API.Repositories
             }
         }
 
+        //public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
+        //{
+        //    var existing = await _context.Performance.FindAsync(performance.PerformanceId);
+        //    if (existing == null) return null;
+
+        //    existing.StudentId = performance.StudentId;
+        //    existing.TeacherId = performance.TeacherId;
+        //    existing.SubjectId = performance.SubjectId;
+        //    existing.ExamType = performance.ExamType;
+        //    existing.MarksObtained = performance.MarksObtained;
+        //    existing.MaxMarks = performance.MaxMarks;
+        //    existing.Percentage = performance.Percentage;
+        //    existing.Grade = performance.Grade;
+        //    existing.ExamDate = performance.ExamDate;
+        //    existing.Remarks = performance.Remarks;
+        //    existing.UpdatedAt = DateTime.UtcNow;
+
+        //    await _context.SaveChangesAsync();
+        //    return existing;
+        //}
+
         public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
         {
             var existing = await _context.Performance.FindAsync(performance.PerformanceId);
             if (existing == null) return null;
 
-            existing.StudentId = performance.StudentId;
-            existing.TeacherId = performance.TeacherId;
-            existing.SubjectId = performance.SubjectId;
-            existing.ExamType = performance.ExamType;
-            existing.MarksObtained = performance.MarksObtained;
-            existing.MaxMarks = performance.MaxMarks;
-            existing.Percentage = performance.Percentage;
-            existing.Grade = performance.Grade;
-            existing.ExamDate = performance.ExamDate;
-            existing.Remarks = performance.Remarks;
-            existing.UpdatedAt = DateTime.UtcNow;
-
+            _context.Entry(existing).CurrentValues.SetValues(performance);
             await _context.SaveChangesAsync();
             return existing;
         }
-
-        //public async Task<Performance?> UpdatePerformanceAsync(Performance performance)
-        //{
-        //    try
-        //    {
-        //        var existing = await _context.Performance.FindAsync(performance.PerformanceId);
-        //        if (existing == null)
-        //        {
-        //            _logger.LogWarning("Update failed: Performance with ID {PerformanceId} not found", performance.PerformanceId);
-        //            return null;
-        //        }
-
-        //        existing.StudentId = performance.StudentId;
-        //        existing.TeacherId = performance.TeacherId;
-        //        existing.SubjectId = performance.SubjectId;
-        //        existing.ExamType = performance.ExamType;
-        //        existing.MarksObtained = performance.MarksObtained;
-        //        existing.MaxMarks = performance.MaxMarks;
-        //        existing.Percentage = performance.Percentage;
-        //        existing.Grade = performance.Grade;
-        //        existing.ExamDate = performance.ExamDate;
-        //        existing.Remarks = performance.Remarks;
-        //        existing.UpdatedAt = DateTime.UtcNow;
-
-        //        await _context.SaveChangesAsync();
-        //        _logger.LogInformation("Updated performance with ID {PerformanceId}", performance.PerformanceId);
-        //        return existing;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex, "Error updating performance with ID {PerformanceId}", performance.PerformanceId);
-        //        throw;
-        //    }
-        //}
-
         public async Task<bool> DeletePerformanceAsync(int id)
         {
             try
@@ -148,5 +123,12 @@ namespace ParentTeacherBridge.API.Repositories
                 throw;
             }
         }
+        public async Task<IEnumerable<Performance>> GetPerformanceByTeacherIdAsync(int teacherId)
+        {
+            return await _context.Performance
+                                 .Where(p => p.TeacherId == teacherId)
+                                 .ToListAsync();
+        }
+
     }
 }
